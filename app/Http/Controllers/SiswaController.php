@@ -74,6 +74,27 @@ return redirect('/siswa')->with('sukses','Data barhasil di ubah');
    }
    public function profile($id){
        $siswa=\App\Siswa::find($id);
-       return view ('siswa.profile',['siswa'=>$siswa]);
+       $matapelajaran=\App\Mapel::all();
+       //menyiapkan data untuk chart
+       $categories=[];
+       $data=[];
+       foreach($matapelajaran as $mp){
+          if($siswa->mapel()->wherePivot('mapel_id',$mp->id)->first()){
+               $categories[]=$mp->nama;
+           $data[]=$siswa->mapel()->wherePivot('mapel_id',$mp->id)->first()->pivot->nilai;
+       }
+       }
+    //    dd($data);
+    //    dd(json_encode($categories));
+       return view ('siswa.profile',['siswa'=>$siswa,'matapelajaran'=>$matapelajaran,'categories'=>$categories,'data'=>$data]);
    }
-}
+   public function addnilai(Request $request,$idsiswa){
+       $siswa=\App\Siswa::find($idsiswa);
+       if($siswa->mapel()->where('mapel_id',$request->mapel)->exists()){
+        return redirect('siswa/'.$idsiswa.'/profile')->with('error','Data Pelajaran Telah ada');   
+       }
+       $siswa->mapel()->attach($request->mapel,['nilai'=>$request->nilai]);
+       return redirect('siswa/'.$idsiswa.'/profile')->with('sukses','Data Berhasil Disimpan');
+   }
+   }
+

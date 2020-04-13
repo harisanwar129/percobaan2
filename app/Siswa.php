@@ -17,6 +17,6 @@ class Siswa extends Model
        return asset('image/'.$this->avatar);
    }
    public function mapel(){
-       return $this->belongsToMany(Mapel::class)->withPivot(['nilai']);
+       return $this->belongsToMany(Mapel::class)->withPivot(['nilai'])->withTimeStamps();
    }
 }

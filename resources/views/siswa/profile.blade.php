@@ -4,6 +4,23 @@
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
+				 @if(session('sukses'))
+					<div class="alert alert-success" role="alert">
+					 <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>				
+					{{session('sukses')}}
+					</div>
+				@endif
+				 @if(session('error'))
+					<div class="alert alert-danger" role="alert">
+				
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>			
+					{{session('error')}}
+					</div>
+				@endif
 					<div class="panel panel-profile">
 						<div class="clearfix">
 							<!-- LEFT COLUMN -->
@@ -51,15 +68,10 @@
 							<!-- END LEFT COLUMN -->
 							<!-- RIGHT COLUMN -->
 							<div class="profile-right">
-								 
-								<!-- END AWARDS -->
-								<!-- TABBED CONTENT -->
-								<div class="custom-tabs-line tabs-line-bottom left-aligned">
-									<ul class="nav" role="tablist">
-										<li class="active"><a href="#tab-bottom-left1" role="tab" data-toggle="tab">Info</a></li>
-										
-									</ul>
-								</div>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+								Tambah Nilai
+								</button>
+								
 								<div class="panel">
 								<div class="panel-heading">
 									<h3 class="panel-title">Detail Mata Pelajaran</h3>
@@ -87,6 +99,11 @@
 									</table>
 								</div>
 							</div>
+							<div class="panel">
+								<div id="chartNilai">
+								
+								</div>
+							</div>
 								</div>
 								<!-- END TABBED CONTENT -->
 							</div>
@@ -97,4 +114,82 @@
 			</div>
 			<!-- END MAIN CONTENT -->
 		</div>
+								
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<form action="/siswa/{{$siswa->id}}/addnilai" method="post" enctype="multipart/form-data">
+				{{csrf_field()}}
+
+				 <div class="form-group">
+							<label for="mapel">Mata Pelajaran</label>
+							<select class="form-control" id="mapel" name="mapel">
+						@foreach($matapelajaran as $mp)
+							<option value="{{$mp->id}}">{{$mp->nama}}</option>
+						@endforeach
+    		</select>
+					<div class="form-group{{$errors->has('nilai') ? 'has-error': ''}}">
+											<label for="nilai">Nama depan</label>
+									<input name="nilai"type="text" class="form-control" id="nilai" aria-describedby="emailHelp" placeholder="nilai" value="{{old('nilai')}}" required>
+									@if($errors->has('nilai'))
+									<span class="help-block">{{$errors->first('nilai')}}</span>
+									@endif
+      				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Simpan</button>
+	</form>
+      </div>
+    </div>
+  </div>
+</div>		
+@stop
+@section('footer')
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+		Highcharts.chart('chartNilai', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Laporan Data Nilai'
+    },
+    
+    xAxis: {
+		categories: {!!json_encode($categories)!!},
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Nilai'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Nilai',
+		data: {!!json_encode($data)!!}
+
+    }]
+});
+
+</script>
 @stop
