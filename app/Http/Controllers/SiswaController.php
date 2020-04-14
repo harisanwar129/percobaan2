@@ -96,5 +96,10 @@ return redirect('/siswa')->with('sukses','Data barhasil di ubah');
        $siswa->mapel()->attach($request->mapel,['nilai'=>$request->nilai]);
        return redirect('siswa/'.$idsiswa.'/profile')->with('sukses','Data Berhasil Disimpan');
    }
+   public function deletenilai($idsiswa,$idmapel){
+        $siswa=\App\Siswa::find($idsiswa);
+        $siswa->mapel()->detach($idmapel);
+        return redirect()->back()->with('hapus','Data Nilai Berhasil Dihapus');
+   }
    }
 

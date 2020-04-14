@@ -1,4 +1,7 @@
 @extends('layout.master')
+@section ('header')
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+@stop
 @section('content')
 <div class="main">
 			<!-- MAIN CONTENT -->
@@ -10,6 +13,15 @@
                 <span aria-hidden="true">&times;</span>
             </button>				
 					{{session('sukses')}}
+					</div>
+				@endif
+				@if(session('hapus'))
+					<div class="alert alert-danger" role="alert">
+				
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>			
+					{{session('hapus')}}
 					</div>
 				@endif
 				 @if(session('error'))
@@ -84,6 +96,7 @@
 												<th>Nama</th>
 												<th>Semester</th>
 												<th>Nilai</th>
+												<th>Aksi</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -92,7 +105,8 @@
 												<td>{{$mapel->kode}}</td>
 												<td>{{$mapel->nama}}</td>
 												<td>{{$mapel->semester}}</td>
-												<td>{{$mapel->pivot->nilai}}</td>
+												<td><a href="#" class="nilai" data-type="text" data-pk="{{$mapel->id}}" data-url="/api/siswa/{{$siswa->id}}/editnilai" data-title="Masukan Nilai">{{$mapel->pivot->nilai}}</a></td>
+												<td><a href="/siswa/{{$siswa->id}}/{{$mapel->id}}/deletenilai" class="btn btn-danger btn-sm" onclick="return confirm ('apakah anda yakin akan menghapusnya?')">Hapus</a></td>
 											</tr>
 											@endforeach
 										</tbody>
@@ -152,6 +166,7 @@
 </div>		
 @stop
 @section('footer')
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script>
 		Highcharts.chart('chartNilai', {
@@ -190,6 +205,8 @@
 
     }]
 });
-
+$(document).ready(function() {
+    $('.nilai').editable();
+});
 </script>
 @stop
