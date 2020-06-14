@@ -24,6 +24,7 @@
                         <th >Jenis Kelamin</th>
                         <th >Agama</th>
                         <th >Alamat</th>
+                        <th >Rata</th>
                         <th >Opsi</th>
 											</tr>
 										</thead>
@@ -36,6 +37,7 @@
                         <td>{{$siswa->jenis_kelamin}}</td>
                         <td>{{$siswa->agama}}</td>
                         <td>{{$siswa->alamat}}</td>
+                        <td>{{$siswa->rataRataNilai()}}</td>
                         <td>	
                         
                         <a href="/siswa/{{$siswa->id}}/edit" class="btn btn-warning btn-sm">edit</a>
