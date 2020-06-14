@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Exports\SiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
+use PDF;
 class SiswaController extends Controller
 {
    public function index(Request $request){
@@ -101,5 +104,15 @@ return redirect('/siswa')->with('sukses','Data barhasil di ubah');
         $siswa->mapel()->detach($idmapel);
         return redirect()->back()->with('hapus','Data Nilai Berhasil Dihapus');
    }
+    public function exportExcel() 
+    {
+        return Excel::download(new SiswaExport, 'Siswa.xlsx');
+    }
+    public function exportPdf() 
+    {
+       $siswa=\App\Siswa::all();
+       $pdf=PDF::LoadView('Export.siswaPdf',['siswa'=>$siswa]);
+       return $pdf->download('siswa.pdf');
+    }
    }
 

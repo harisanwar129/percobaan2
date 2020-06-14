@@ -11,6 +11,8 @@
 									<h3 class="panel-title">Data Siswa</h3>
                   
                   <div class="navbar-btn navbar-btn-right">
+                  <a href="/siswa/exportExcel" class="btn btn-sm btn-primary">Export Ke Excel</a>
+                  <a href="/siswa/exportPdf" class="btn btn-sm btn-primary">Export Ke Pdf</a>
 					<a type="button"class="btn btn-primary" title="Upgrade to Pro" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> <span>Tambah Data</span></a>
 				</div>
 
