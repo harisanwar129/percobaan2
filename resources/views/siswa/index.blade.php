@@ -43,7 +43,7 @@
                         <td>	
                         
                         <a href="/siswa/{{$siswa->id}}/edit" class="btn btn-warning btn-sm">edit</a>
-                        <a href="/siswa/{{$siswa->id}}/delete" class="btn btn-danger btn-sm" onclick="return confirm ('apakah anda yakin akan menghapusnya?')">Hapus</a>
+                        <a href="#" class="btn btn-danger btn-sm delete" siswa-id="{{$siswa->id}}">Hapus</a>
                           
                       </td>
 
@@ -68,7 +68,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form action="/siswa/create" method="post" enctype="multipart/form-data">
+      <form action="/siswa/create" method="POST" enctype="multipart/form-data">
       {{csrf_field()}}
 
           <div class="form-group{{$errors->has('nama_depan') ? 'has-error': ''}}">
@@ -137,6 +137,29 @@
   </div>
 </div>              
 @stop
+
+@section('footer')
+ <script>
+        $('.delete').click(function(){
+            var siswa_id=$(this).attr('siswa-id');
+            swal({
+          title: "Yakin??",
+          text: "Apaakah anda yakin akan menghapus data dengan "+siswa_id+"??",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+           window.location="/siswa/"+siswa_id+"/delete";
+          } else {
+            swal("Your imaginary file is safe!");
+          }
+        });
+        });
+ </script>
+
+ @stop
 <!--@section('content1')
   @if(session('sukses'))
   <div class="alert alert-success alert-dismissible fade show">
