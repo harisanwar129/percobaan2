@@ -12,7 +12,9 @@
 */
 
 Route::get('/','SiteController@home');
-Route::get('/about','SiteController@about');
+Route::get('/register','SiteController@register');
+Route::post('/postregister','SiteController@postregister');
+// Route::get('/about','SiteController@about');
 Route::get('/login','AuthController@index')->name('login');
 Route::post('/postlogin','AuthController@postlogin');
 Route::get('/logout','AuthController@logout');
@@ -34,9 +36,20 @@ Route::get('/siswa/{id}/{idmapel}/deletenilai','SiswaController@deletenilai');
 Route::get('/siswa/exportExcel','SiswaController@exportExcel');
 Route::get('/siswa/exportPdf','SiswaController@exportPdf');
 Route::get('/guru/{id}/profile','GuruController@profile'); 
+Route::get('/posts','PostController@index'); 
+Route::get('post/add',[
+'uses'=>'PostController@add',
+'as'=>'posts.add'
+
+]);
 });
 
 Route::group(['middleware'=>['auth','checkRole:admin,siswa']],function(){
 Route::get('/dasboard','DasboardController@index');
 
 });
+Route::get('/{slug}',[
+'uses'=>'SiteController@singlepost',
+'as'=>'site.single.post'
+
+]);
