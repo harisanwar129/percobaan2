@@ -575,11 +575,11 @@
 							</div>
 						</div>
 					</div>					
-					<div class="row">
+					<div class="row" >
 					@foreach($posts as $post)
 						<div class="col-lg-3 col-md-6 single-blog">
 							<div class="thumb">
-								<img class="img-fluid" src="{{$post->thumbnail()}}" alt="">				
+								<img class="img-fluid" src="{{$post->thumbnail()}}" alt="" style="height:180px; wight:150px;">				
 							</div>
 							<p class="meta">{{$post->created_at->format('d M ,Y')}}  |  Oleh <a href="#">{{$post->user->name}}</a></p>
 							<a href="blog-single.html">
