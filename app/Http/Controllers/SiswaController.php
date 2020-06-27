@@ -172,11 +172,14 @@ public function getdatasiswa(){
        return $s->rataRataNilai(); 
     })
     ->addColumn('aksi',function ($s){
-        return '<a href="#" class="btn btn-warning">Edit</a>';
+        return '<a href="/siswa/'.$s->id.'/profile/" class="btn btn-warning">Edit</a>';
     })
     ->rawColumns(['nama_lengkap','rata2_nilai','aksi'])
     ->toJson();
 }
-
+    public function profilsaya(){
+        $siswa=auth()->user()->siswa;
+        return view('siswa.profilsaya',compact(['siswa']));
+    }
    }
 
