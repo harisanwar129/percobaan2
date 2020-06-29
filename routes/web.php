@@ -10,6 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('kirimemail',function(){
+//     \Mail::raw('halo siswa baru',function($message){
+//         $message->to('siswabaru@gmail.com','basrul');
+//         $message->subject('Pendaftaran siswa');
+//     });
+// });
+
 
 Route::get('/','SiteController@home');
 Route::get('/register','SiteController@register');
@@ -35,6 +42,7 @@ Route::post('/siswa/{id}/addnilai','SiswaController@addnilai');
 Route::get('/siswa/{id}/{idmapel}/deletenilai','SiswaController@deletenilai');
 Route::get('/siswa/exportExcel','SiswaController@exportExcel');
 Route::get('/siswa/exportPdf','SiswaController@exportPdf');
+Route::post('/siswa/import','SiswaController@importexcel')->name('siswa.import');
 Route::get('/guru/{id}/profile','GuruController@profile'); 
 Route::get('/posts','PostController@index')->name('posts.index'); 
 Route::get('post/add',[

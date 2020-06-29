@@ -181,5 +181,9 @@ public function getdatasiswa(){
         $siswa=auth()->user()->siswa;
         return view('siswa.profilsaya',compact(['siswa']));
     }
+    public function importexcel(Request $request){
+            Excel::import(new \App\Imports\SiswaImport,$request->file('data_siswa'));
+    }
+    
    }
 

@@ -9,11 +9,13 @@
                   <div class="panel">
 								<div class="panel-heading">
 									<h3 class="panel-title">Data Siswa</h3>
-                  
                   <div class="navbar-btn navbar-btn-right">
+                  <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+                        Import Excel
+                      </a>
                   <a href="/siswa/exportExcel" class="btn btn-sm btn-primary">Export Ke Excel</a>
                   <a href="/siswa/exportPdf" class="btn btn-sm btn-primary">Export Ke Pdf</a>
-					<a type="button"class="btn btn-primary" title="Upgrade to Pro" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> <span>Tambah Data</span></a>
+					<a type="button"class="btn btn-primary" title="Upgrade to Pro" data-toggle="modal" data-target="#importExcel"><i class="fa fa-plus"></i> <span>Tambah Data</span></a>
 				</div>
 
 								</div>
@@ -40,6 +42,29 @@
           </div>
       </div>
   </div>
+  <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {!!Form::open(['route'=>'siswa.import','class'=>'form-horizontal','enctype'=>'multipart/form-data'])!!}
+
+        {!!Form::file('data_siswa')!!}
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-sm btn-primary" value="Import">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
