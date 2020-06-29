@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\NotifPendaftaranSiswa;
 use App\Siswa;
 use App\Post;
 class SiteController extends Controller
@@ -31,10 +32,12 @@ class SiteController extends Controller
         $request->request->add(['user_id'=>$user->id]);
         $siswa=Siswa::create($request->all());
 
-        \Mail::raw('Selamat datang'.$user->name,function($message) use($user){
-            $message->to($user->email,$user->name);
-            $message->subject('selamat anda telah terdaftar di sekolah kami');
-        });
+        // \Mail::raw('Selamat datang'.$user->name,function($message) use($user){
+        //     $message->to($user->email,$user->name);
+        //     $message->subject('selamat anda telah terdaftar di sekolah kami');
+        
+        // });
+        \Mail::to($user->email)->send(new NotifPendaftaranSiswa);
         return redirect('/')->with('sukses','Data Pendaftaran Berhasil Dikirim');
     }
     public function singlepost($slug){
