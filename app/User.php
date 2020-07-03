@@ -44,4 +44,11 @@ class User extends Authenticatable
     public function siswa(){
         return $this->hasOne(Siswa::class);
     }
+    public function forum(){
+        return $this->hasMany(Forum::class);
+    }
+    public function komentar(){
+        return $this->hasMany(Komentar::class);
+        
+    }
 }
