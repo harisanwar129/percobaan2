@@ -67,6 +67,8 @@ Route::group(['middleware'=>['auth','checkRole:siswa']],function(){
     Route::get('/siswa/{siswa}/edit','SiswaController@edit');
     Route::get('profilsaya','SiswaController@profilsaya');
     Route::get('/forum','ForumController@index');
+    Route::post('/forum/create','ForumController@create');
+    Route::get('/forum/{forum}/view','ForumController@view');
 });
 
 Route::get('getdatasiswa',[
