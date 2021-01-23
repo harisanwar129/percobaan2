@@ -17,7 +17,7 @@ if($request->has('cari')){
                            ->orWhere('jenis_kelamin','LIKE','%'.$request->cari.'%')
                            ->orWhere('agama','LIKE','%'.$request->cari.'%')
                            ->orWhere('alamat','LIKE','%'.$request->cari.'%')
-                           ->get();
+                           ->paginate(20);
 }else {
    $data_siswa=\App\Siswa::all();
        
@@ -57,7 +57,7 @@ if($request->hasFile('avatar')){
 }
 return redirect('/siswa')->with('sukses','Data berhasil ditambahkan');
    }
-
+ 
    public function edit(Siswa $siswa){
 // $siswa=Siswa::find($id);
 return view ('siswa/edit',['siswa'=>$siswa]);
@@ -162,5 +162,28 @@ return redirect('/siswa')->with('sukses','Data barhasil di ubah');
        $pdf=PDF::LoadView('Export.siswaPdf',['siswa'=>$siswa]);
        return $pdf->download('siswa.pdf');
     }
+public function getdatasiswa(){
+    $siswa=Siswa::select('siswa.*');
+    return \DataTables::eloquent($siswa)
+    ->addColumn('nama_lengkap',function($s){
+        return $s->nama_depan. ' ' .$s->nama_belakang;
+    })
+    ->addColumn('rata2_nilai',function($s){
+       return $s->rataRataNilai(); 
+    })
+    ->addColumn('aksi',function ($s){
+        return '<a href="/siswa/'.$s->id.'/profile/" class="btn btn-warning">Edit</a>';
+    })
+    ->rawColumns(['nama_lengkap','rata2_nilai','aksi'])
+    ->toJson();
+}
+    public function profilsaya(){
+        $siswa=auth()->user()->siswa;
+        return view('siswa.profilsaya',compact(['siswa']));
+    }
+    public function importexcel(Request $request){
+            Excel::import(new \App\Imports\SiswaImport,$request->file('data_siswa'));
+    }
+    
    }
 
