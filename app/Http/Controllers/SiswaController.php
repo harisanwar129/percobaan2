@@ -57,7 +57,7 @@ if($request->hasFile('avatar')){
 }
 return redirect('/siswa')->with('sukses','Data berhasil ditambahkan');
    }
-
+ 
    public function edit(Siswa $siswa){
 // $siswa=Siswa::find($id);
 return view ('siswa/edit',['siswa'=>$siswa]);

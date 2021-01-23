@@ -62,7 +62,7 @@ Route::post('post/create',[
 // Route::get('/siswa/{siswa}/edit','SiswaController@edit');
 // });
 
-Route::group(['middleware'=>['auth','checkRole:siswa']],function(){
+Route::group(['middleware'=>['auth','checkRole:siswa,admin']],function(){
     Route::get('/dasboard','DasboardController@index');
     Route::get('/siswa/{siswa}/edit','SiswaController@edit');
     Route::get('profilsaya','SiswaController@profilsaya');
